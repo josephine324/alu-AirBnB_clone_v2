@@ -52,4 +52,3 @@ def do_deploy(archive_path):
         return False
     else:
         return True
-

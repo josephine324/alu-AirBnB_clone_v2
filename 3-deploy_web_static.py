@@ -1,19 +1,18 @@
 #!/usr/bin/python3
-"""Fabric script that distributes an archive to your web servers"""
-from fabric.api import env, put, run, local
-from os.path import exists
-from datetime import datetime
-import os
+"""Fabric script that creates and distributes an archive to your web servers"""
 
-env.hosts = ['34.207.118.153', '3.91.64.203']
+import os
+from fabric.api import env, local, put, run
+from datetime import datetime
+from os.path import exists
+
+env.hosts = ["107.22.129.248", "54.234.186.18"]
 env.user = "ubuntu"
 env.key = "~/.ssh/id_rsa"
 
 
 def do_pack():
-    """Function to generate a .tgz archive from the contents of the web_static
-    folder."""
-
+    """Create a .tgz archive from the web_static folder."""
     time_stamp = datetime.now().strftime("%Y%m%d%H%M%S")
     local("mkdir -p versions")
     archive_path = "versions/web_static_{}.tgz".format(time_stamp)
@@ -25,7 +24,7 @@ def do_pack():
 
 
 def do_deploy(archive_path):
-    """Function to distribute an archive to your web servers"""
+    """Distribute the archive to web servers and deploy it."""
     if not exists(archive_path):
         return False
     try:
